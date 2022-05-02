@@ -40,6 +40,10 @@ def drawResult(h, s, v):
 def onClick(event, x, y, flags, param):
     global cH, cS, cV
     if event == cv2.EVENT_LBUTTONDBLCLK:
+        drawCircle(cV)
+        drawLine(cH)
+        drawResult(cH, cS, cV)
+
         (h, s, v) = img[y, x]
 
         if x <= 512:
@@ -48,10 +52,12 @@ def onClick(event, x, y, flags, param):
             drawResult(h, s, cV)
             cH = h
             cS = s
+            cv2.circle(img, (x, y), 1, (255 - int(h), 255 - int(s), 255 - int(v)), cv2.FILLED)
         else:
             drawCircle(v)
             drawLine(cH)
             drawResult(cH, cS, v)
+            cv2.rectangle(img, (512 + 128 - 25, y), (512 + 128 + 25, y), (255 - int(h), 255 - int(s), 255 - int(v)), cv2.FILLED)
             cV = v
 
         cv2.imshow("HSV Color Picker", cv2.cvtColor(img, cv2.COLOR_HSV2BGR))
