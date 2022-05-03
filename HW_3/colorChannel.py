@@ -5,6 +5,7 @@ import numpy as np
 
 img = np.ones((512, 512 + 256, 3), np.uint8)
 img.fill(255)
+one = np.ones((1, 1, 3), np.uint8)
 
 
 def drawCircle(value):
@@ -57,8 +58,16 @@ def onClick(event, x, y, flags, param):
             drawCircle(v)
             drawLine(cH)
             drawResult(cH, cS, v)
-            cv2.rectangle(img, (512 + 128 - 25, y), (512 + 128 + 25, y), (255 - int(h), 255 - int(s), 255 - int(v)), cv2.FILLED)
+            cv2.rectangle(img, (512 + 128 - 25, y), (512 + 128 + 25, y), (255 - int(h), 255 - int(s), 255 - int(v)),
+                          cv2.FILLED)
             cV = v
+
+        cv2.rectangle(one, [-1, -1], [1, 1], (int(h), int(s), int(v)), cv2.FILLED)
+        print("HSV:", one)
+        bgr = cv2.cvtColor(one, cv2.COLOR_HSV2BGR)
+        print("BGR:", bgr)
+        print("Lab:", cv2.cvtColor(bgr, cv2.COLOR_BGR2Lab))
+        print("YCrCb:", cv2.cvtColor(bgr, cv2.COLOR_BGR2YCrCb))
 
         cv2.imshow("HSV Color Picker", cv2.cvtColor(img, cv2.COLOR_HSV2BGR))
 
