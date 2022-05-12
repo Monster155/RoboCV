@@ -69,5 +69,10 @@ scharrY = cv2.Scharr(img_blur, cv2.CV_32F, 0, 1)
 cv2.imshow('Scharr X', scharrX)
 cv2.imshow('Scharr Y', scharrY)
 
+# Canny
+edges = cv2.Canny(img_blur, 100, 200)
+
+cv2.imshow('Canny', edges)
+
 cv2.waitKey(0)
 cv2.destroyAllWindows()
