@@ -48,4 +48,15 @@ img_pers_t = cv2.warpPerspective(img_t, M, [img3.shape[1], img3.shape[0]])
 
 cv2.imshow("tiger", img_pers_t)
 
+cont = np.array(dst, np.int32).reshape((-1, 1, 2))
+mask = np.zeros(img_pers_t.shape, dtype=img_pers_t.dtype)
+mask = cv2.fillPoly(mask, [cont], (255))
+cv2.imshow("mask", mask)
+
+for i in range(0, img_pers_t.shape[0]):
+    for j in range(0, img_pers_t.shape[1]):
+        if mask[i, j][0] != 0:
+            img3[i, j] = img_pers_t[i, j]
+cv2.imshow("res", img3)
+
 cv2.waitKey(0)
