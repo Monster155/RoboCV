@@ -36,15 +36,16 @@ while cap.isOpened():
 
     dst = cv2.perspectiveTransform(pts, M)
     dst += (w, 0)
+    dst32 = np.int32(dst)
 
     img3 = cv2.drawMatches(img1, keypoints1, img2, keypoints2, good_matches, None)
-    img3 = cv2.polylines(img3, [np.int32(dst)], True, (0, 0, 255), 3, cv2.LINE_AA)
+    img3 = cv2.polylines(img3, dst32, True, (0, 0, 255), 3, cv2.LINE_AA)
 
     M = cv2.getPerspectiveTransform(points2, dst)
     img_pers_t = cv2.warpPerspective(img_t, M, [img3.shape[1], img3.shape[0]])
 
     mask = np.zeros(img_pers_t.shape, dtype=img_pers_t.dtype)
-    mask = cv2.fillPoly(mask, [np.int32(dst)], (255))
+    mask = cv2.fillPoly(mask, dst32, (255))
 
     for i in range(0, img_pers_t.shape[0]):
         for j in range(0, img_pers_t.shape[1]):
